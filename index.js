@@ -19,8 +19,19 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
+const route = require("./routes");
+
 app.get('/', (req, res) => {
   res.send(main());
+});
+app.get("/", (req, res, next) => {
+  res.send()
+});
+app.post("/", (req, res, next) => {
+  res.send()
+});
+app.get("/add", (req, res, next) => {
+  res.send()
 });
 
 // DATABASE
