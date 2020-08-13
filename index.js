@@ -5,14 +5,25 @@ const PORT = 1234;
 
 // Require some middleware
 const morgan = require('morgan');
+const path = require("path")
 
 // Require some views
 const main = require('./views/main');
 
+// Require database
+
+const { db } = require("./models");
+
 // MIDDLEWARE
-app.use(express.static('FOLDER PATH')); // update with folder path
+app.use('/public', express.static( path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
+
+// DATABASE
+db.authenticate()
+  .then(() => {
+    console.log('connected to the database');
+  })
 
 // ROUTES
 app.get('/', (req, res) => {
