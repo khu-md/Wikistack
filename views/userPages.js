@@ -1,8 +1,10 @@
 const html = require("html-template-tag");
 const layout = require("./layout");
 
+// why won't user email display?
 module.exports = (user, pages) => layout(html`
-  <h3>Pages written by ${user.name}</h3>
+<div style="height: 50px"></div>
+  <h3>Pages written by ${user.name} at ${user.email}</h3>
   <hr>
   <form method="GET" action="/wiki/search">
     <input type="text" name="search" />
