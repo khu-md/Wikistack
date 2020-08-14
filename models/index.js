@@ -3,6 +3,7 @@ const db = new Sequelize('postgres://localhost:5432/wikistack', {
   logging: false,
 });
 
+// TODO: Make sure slugs are unique
 const Page = db.define('pages', {
   title: { type: Sequelize.STRING, allowNull: false },
   slug: {
@@ -16,7 +17,10 @@ const Page = db.define('pages', {
 
 Page.beforeValidate((page, options) => {
   const slugify = (str) => {
-    return str.replace(/\s+/g, '_').replace(/\W/g, '');
+    return str
+      .replace(/\s+/g, '_')
+      .replace(/\W/g, '')
+      .toLowerCase();
   };
   page.slug = slugify(page.title);
   console.log('slugified string --> ', page.slug);
@@ -26,9 +30,12 @@ const User = db.define('users', {
   name: { type: Sequelize.STRING, allowNull: false },
   email: {
     type: Sequelize.STRING,
-    validate: { allowNull: false, isEmail: true },
+    allowNull: false,
+    validate: { isEmail: true },
   },
 });
+
+Page.belongsTo(User, {as: 'author'});
 
 module.exports = {
   db,
