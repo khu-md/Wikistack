@@ -6,7 +6,8 @@ const PORT = 1234;
 // Require some middleware and routes
 const morgan = require('morgan');
 const path = require('path');
-const routes = require('./routes');
+const wikiRoutes = require('./routes/wiki');
+const userRoutes = require('./routes/users');
 
 // Require some views
 const main = require('./views/main');
@@ -21,10 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
 // New page routes
-app.use('/wiki', routes);
+app.use('/wiki', wikiRoutes);
 // Main page
 app.get('/', (req, res) => {
-  res.send(main());
+  res.redirect('/wiki')
 });
 
 // DATABASE
