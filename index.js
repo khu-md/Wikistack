@@ -3,9 +3,10 @@ const express = require('express');
 const app = express();
 const PORT = 1234;
 
-// Require some middleware
+// Require some middleware and routes
 const morgan = require('morgan');
 const path = require('path');
+const routes = require('./routes');
 
 // Require some views
 const main = require('./views/main');
@@ -19,19 +20,11 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
-const route = require('./routes');
-
+// New page routes
+app.use('/wiki', routes);
+// Main page
 app.get('/', (req, res) => {
   res.send(main());
-});
-app.get('/', (req, res, next) => {
-  res.send();
-});
-app.post('/', (req, res, next) => {
-  res.send();
-});
-app.get('/add', (req, res, next) => {
-  res.send();
 });
 
 // DATABASE
