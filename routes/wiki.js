@@ -1,3 +1,4 @@
+// Let's build a dang Router
 const router = require('express').Router();
 
 // DATABASES
@@ -12,7 +13,6 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body.status);
     const page = await Page.create({
       title: req.body.title,
       content: req.body.content,
@@ -24,6 +24,7 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
+
 router.get('/add', (req, res, next) => {
   res.send(addPage());
 });
