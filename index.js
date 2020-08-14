@@ -23,9 +23,10 @@ app.use(express.urlencoded({ extended: false }));
 // ROUTES
 // New page routes
 app.use('/wiki', wikiRoutes);
+app.use('/users', userRoutes);
 // Main page
 app.get('/', (req, res) => {
-  res.redirect('/wiki')
+  res.redirect('/wiki');
 });
 
 // DATABASE
@@ -41,7 +42,7 @@ db.authenticate().then(() => {
 
 (async () => {
   try {
-    await db.sync();
+    await db.sync({ force: false });
     console.log('-- Database tables created! --');
     app.listen(PORT, () => {
       console.log('Listening on --> ', PORT);
