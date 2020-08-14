@@ -19,43 +19,40 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
-const route = require("./routes");
+const route = require('./routes');
 
 app.get('/', (req, res) => {
   res.send(main());
 });
-app.get("/", (req, res, next) => {
-  res.send()
+app.get('/', (req, res, next) => {
+  res.send();
 });
-app.post("/", (req, res, next) => {
-  res.send()
+app.post('/', (req, res, next) => {
+  res.send();
 });
-app.get("/add", (req, res, next) => {
-  res.send()
+app.get('/add', (req, res, next) => {
+  res.send();
 });
 
 // DATABASE
 db.authenticate().then(() => {
-  console.log('Connected to the database');
+  console.log('-- Connected to the database --');
 });
 
-( async () => {
+// below we use an immediately invoked function expression
+// IIFE : <https://developer.mozilla.org/en-US/docs/Glossary/IIFE>
+
+// This is a pattern that was more commonly seen prior to the introduction of const and let (local scoping)
+// <http://gregfranko.com/blog/i-love-my-iife/>
+
+(async () => {
   try {
     await db.sync();
-    console.log("Database tables created!");
+    console.log('-- Database tables created! --');
     app.listen(PORT, () => {
       console.log('Listening on --> ', PORT);
     });
   } catch (error) {
-    console.log("Something went wrong -->", error.message);
+    console.log('Something went wrong -->', error.message);
   }
 })();
-
-// LISTEN
-
-// (async () => {
-//   try
-//   await db.sync();
-//   console.log()
-// })();
-
