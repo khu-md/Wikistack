@@ -1,13 +1,28 @@
 const router = require('express').Router();
 
+// DATABASES
+const { Page } = require('../models');
+
 // VIEWS
 const addPage = require('../views/addPage');
 
 router.get('/', (req, res, next) => {
   res.send('retrieve all wiki pages');
 });
-router.post('/', (req, res, next) => {
-  res.send('submit a new page to database');
+
+router.post('/', async (req, res, next) => {
+  try {
+    console.log(req.body.status);
+    const page = await Page.create({
+      title: req.body.title,
+      content: req.body.content,
+      status: req.body.status
+    });
+
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
 });
 router.get('/add', (req, res, next) => {
   res.send(addPage());
